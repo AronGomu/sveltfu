@@ -1,19 +1,7 @@
 <script>
-import { Game } from '../../engine/game'
-
-console.log("On Game");
+import { Game } from '../../engine/Game'
 
 let g = new Game()
-
-g.addToDeck()
-
-
-
-g.draw()
-
-console.log(g.hand)
-
-console.log("YO")
 
 </script>
 

@@ -1,5 +1,5 @@
 import type { Card } from "../engine/card";
-import { testSet } from "./test";
+import { testSet } from "./test.set";
 
 export class Database {
   cards: Card[]; // Card list

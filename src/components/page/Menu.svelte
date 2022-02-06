@@ -5,10 +5,9 @@ console.log("On Menu");
 </script>
 
 <div>
-  <Button text="New Game" url="#/new-game" />
+  <Button text="New Game" url="#/game" />
   <Button text="Continue" url="#/new-game" disabled={true}/>
   <Button text="Options" url="#/options"/>
-  <Button text="Game" url="#/game"/>
 
 </div>
 
