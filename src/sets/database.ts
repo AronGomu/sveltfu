@@ -1,4 +1,4 @@
-import type { Card } from "../engine/card";
+import type { Card } from "../engine/Card";
 import { testSet } from "./test.set";
 
 export class Database {

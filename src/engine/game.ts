@@ -1,68 +1,49 @@
 import { Database } from "../sets/Database";
-import type { Card } from "./card";
-import { Cost } from "./cost";
+import { Player } from "./Player";
+import type { Card } from "./Card";
+import { Opponent } from "./Opponent";
 import { Ressources } from "./ressources";
 
+/**
+ * Contains all the elements describing the game state and functions associated with it
+ */
 export class Game {
-  ressources: Ressources;
-  deck: Card[];
-  hand: Card[];
-  database: Database;
-  stack: Card[];
+  /** State of the game, what action is occuring */
+  state: string;
+  database: Database = new Database();
+  player: Player;
+  opponents: Opponent[];
 
+
+  /**
+   * Constructor of a gane object
+   * @param database A Database object
+   * @param stack An array of Card object 
+   * @param player Player object containing all ressources
+   * @param opponents[] An array of Opponent object containing the their behavior
+   */
   constructor(
-    ressources = new Ressources(0, 0, 0, 0),
-    deck = [],
-    hand = [],
-    database = new Database(),
-    stack = [],
+    state: string = "Game Start",
+    player: Player = new Player(),
+    opponents: Opponent[] = []
   ) {
-    this.ressources = ressources;
-    this.deck = deck;
-    this.hand = hand;
-    this.database = database;
-    this.stack = stack;
+    this.state = state;
+    this.player = player;
+    this.opponents = opponents;
   }
 
-  // Generate X numnber of a card to the deck
-  // id : card id
-  // nb : number of card to add
-  addToDeck(id: string, nb: number): boolean {
-    let card = this.database.getCard(id);
-    if (card == null) return false;
-    for (let i = 0; i < nb; i++) {
-      this.deck.push(card);
-    }
-    return true;
-  }
+  /** Return the player or an opponent correspind to the name given 
+   * @param name name of the player or opponent
+   * @returns a Player object
+  */
+  getPlayerByName(name) : Player {
+    if (this.player.name == name) return this.player;
 
-  // Put X number of the last card from the deck in the hand
-  // Return an empty array if there are not enough cards in the deck
-  draw(nb): Card[] {
-
-    if (this.deck.length < nb) return [];
-
-    let cardsDrawn: Card[] = []
-
-    for (let i = 0; i < nb; i++) {
-      let cardDrew: Card = this.deck.pop();
-      if (cardDrew) {
-        this.hand.push(cardDrew);
-        cardsDrawn.push(cardDrew);
-      }
+    for (let i = 0; i < this.opponents.length; i++) {
+      if (this.opponents[i].name == name) return this.opponents[i]
     }
 
-    return cardsDrawn;
-  }
-
-  // Put the card on the stack and resolve the card effect
-  // i : index of the card in list
-  playCardFromHand(i): Card {
-    if (i + 1 > this.hand.length) return null;
-
-    let cardToPlay = this.hand[i];
-    this.stack.push(cardToPlay);
-    this.hand.splice(i, 1);
-    return cardToPlay;
+    throw new Error("No player found for this name.");
+    
   }
 }

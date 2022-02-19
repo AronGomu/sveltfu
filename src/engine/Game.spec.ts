@@ -84,8 +84,13 @@ it('plays the 1 card from the a hand of 2 card', () => {
   expect(g.stack[0].id).toBe('test-001');
 });
 
-it('plays the 1 card from the a hand of 0 card', () => {
+it('plays the 1 card from a hand of 0 card', () => {
   g.playCardFromHand(0);
   expect(g.hand.length).toBe(0);
   expect(g.stack.length).toBe(0);
+});
+
+
+it('simulates an entire simple game', () => {
+  g.deck = g.addToDeck('test-001', 1);
 });
